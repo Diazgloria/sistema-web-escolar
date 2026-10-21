@@ -11,6 +11,8 @@ Método: por cada historia se escribe la pregunta que el sistema le hará a la b
 
 Durante la validación se agregó una columna: `grupos.horario_completo` (HU-11).
 
+Cambio del 21/10: el Product Owner compartió el formato oficial de horario docente. Para generarlo se agregaron a `docentes` los campos `num_personal`, `curp`, `rfc` y `sindicato`, y la tabla `descargas` (horas del docente sin grupo). El total de horas del formato se calcula: clases + descargas del docente en el semestre.
+
 ## Tabla de validación
 
 | Historia | Pregunta a la base de datos | Tablas y columnas que la responden | ¿Se puede? |
@@ -27,7 +29,7 @@ Durante la validación se agregó una columna: `grupos.horario_completo` (HU-11)
 | HU-10 Bloquear empalmes | Al guardar una clase, ¿ya hay otra con el mismo grupo, docente o aula en esa franja y semestre? | `clases`: UNICA (`grupo_id`, `franja_id`), UNICA (`semestre_id`, `docente_id`, `franja_id`), UNICA (`semestre_id`, `aula_id`, `franja_id`). La regla que falla indica la causa del empalme | Sí |
 | HU-11 Horario completo | ¿Este grupo ya tiene su horario marcado como completo? | `grupos.horario_completo` (agregada en esta validación) | Sí |
 | HU-12 Horario del alumno | ¿Qué clases tiene el grupo de este alumno, a qué hora y en qué aula? | `usuarios` → `alumnos.grupo_id` → `clases` → `materias`, `aulas`, `franjas_horarias`, `docentes` | Sí |
-| HU-13 Carga del docente | ¿Qué clases da este docente, a qué hora y en qué aula? | `usuarios` → `docentes` → `clases` (`docente_id`) → `grupos`, `materias`, `aulas`, `franjas_horarias` | Sí |
+| HU-13 Carga del docente | ¿Qué clases y descargas tiene este docente, a qué hora, y cuántas horas suma? | `usuarios` → `docentes` (datos del encabezado) → `clases` y `descargas` (`docente_id`) → `grupos`, `materias`, `aulas`, `franjas_horarias`; total = COUNT de ambas | Sí* |
 | HU-14 Capturar calificaciones | ¿Qué grupos y materias le tocan a este docente? Guardar la calificación de cada alumno | `clases` donde `docente_id` es el suyo; `calificaciones` (`alumno_id`, `materia_id`, `semestre_id`, `docente_id`, `calificacion DECIMAL(4,2)`) | Sí* |
 | HU-15 Consultar calificaciones | ¿Qué calificaciones tiene este alumno por materia? | `calificaciones` por `alumno_id`, con `materias` | Sí |
 | HU-16 Boleta | ¿Cuál es la boleta de este alumno en un semestre, con su promedio? | `calificaciones` por `alumno_id` y `semestre_id`; el promedio se calcula (`AVG`). No se guarda tabla de boleta | Sí |
@@ -40,6 +42,7 @@ El modelo guarda los datos para estas reglas, pero la base de datos no puede imp
 2. **Docente apto para la clase (HU-09):** antes de guardar una clase, comprobar en `docente_materia` que el docente imparte esa materia, y en `disponibilidades` que está libre en esa franja.
 3. **Calificación entre 0 y 10 (HU-14):** `DECIMAL(4,2)` acepta hasta 99.99, así que el formulario debe validar el rango.
 4. **El docente solo califica sus grupos (HU-14):** solo mostrar y aceptar alumnos de grupos donde el docente tiene una clase de esa materia.
+5. **Una descarga no choca con una clase (HU-13):** antes de guardar una descarga o una clase, comprobar que el docente no tenga la otra en esa misma franja y semestre (están en tablas distintas, así que la regla UNICA no lo cubre).
 
 ## Criterios de aceptación de HT-02
 
