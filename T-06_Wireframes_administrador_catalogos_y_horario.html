@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T-06 · Wireframes del administrador: catálogos y armado de horario con aviso de empalme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Variables de la guía de estilo (T-04) */
+:root{
+  --color-primario:#1F4E8C; --color-primario-oscuro:#14365F; --color-primario-claro:#E6EEF8;
+  --color-texto:#1F2937; --color-texto-sec:#4B5563; --color-borde:#D1D5DB; --color-fondo:#F5F7FA; --color-superficie:#FFFFFF;
+  --ok:#2E7D32; --ok-bg:#E8F5E9; --err:#C62828; --err-bg:#FDECEA; --warn:#7A4F00; --warn-bg:#FFF4D6; --info:#1F4E8C; --info-bg:#E6EEF8;
+  --fuente:"Inter",system-ui,"Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;font:400 16px/1.5 var(--fuente);color:var(--color-texto);background:#E5E7EB}
+.doc{background:var(--color-primario);color:#fff;padding:16px 24px}
+.doc b{font-weight:700;font-size:20px}
+.doc p{margin:2px 0 0;font-size:14px;opacity:.95}
+main{max-width:1160px;margin:0 auto;padding:24px 16px 60px}
+.lead{margin:0 0 24px;max-width:80ch;color:var(--color-texto-sec)}
+.item{margin-bottom:40px}
+.item h3{margin:0 0 4px;font-size:20px;font-weight:600}
+.cap{margin:0 0 10px;color:var(--color-texto-sec);font-size:14px}
+.cap code{background:#fff;border:1px solid var(--color-borde);border-radius:4px;padding:0 6px;font-family:var(--fuente)}
+.scr{background:var(--color-superficie);border:1px solid var(--color-borde);border-radius:8px;overflow-x:auto}
+.scr>.in{min-width:900px}
+.bar{display:flex;gap:6px;align-items:center;background:#EEF0F3;border-bottom:1px solid var(--color-borde);padding:8px 12px}
+.bar i{width:10px;height:10px;border-radius:50%;background:#B8BEC8}
+.bar .url{flex:1;margin-left:8px;background:#fff;border:1px solid var(--color-borde);border-radius:12px;padding:0 12px;font-size:14px;color:var(--color-texto-sec)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pair .scr>.in{min-width:0}
+.pair .tag{font-size:14px;margin:0 0 6px;color:var(--color-texto-sec);font-weight:600}
+@media(max-width:900px){.pair{grid-template-columns:1fr}}
+.stack>*+*{margin-top:18px}
+.stack .tag{font-size:14px;margin:0 0 6px;color:var(--color-texto-sec);font-weight:600}
+.notes{margin:10px 0 0;padding:10px 14px;background:#fff;border-left:4px solid var(--color-primario);font-size:14px;color:var(--color-texto)}
+.notes ul{margin:6px 0 0;padding-left:20px}
+
+/* maqueta */
+.app{display:grid;grid-template-columns:230px 1fr;min-height:460px;background:var(--color-fondo)}
+.hd{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;padding:10px 20px;background:var(--color-primario);color:#fff}
+.hd .logo{font-weight:700;font-size:18px;display:flex;align-items:center;gap:10px}
+.hd .logo s{width:26px;height:26px;border:2px solid #fff;border-radius:6px;display:inline-block}
+.hd span.u{font-size:14px}
+.side{background:var(--color-primario-oscuro);color:#fff;padding:12px 0;display:flex;flex-direction:column}
+.side div{padding:8px 20px;font-size:14px}
+.side .g{color:#C9D6EA;font-weight:600;padding-top:14px}
+.side .s{padding-left:34px}
+.side .on{background:var(--color-primario);font-weight:600;border-left:4px solid #fff;padding-left:16px}
+.side .s.on{padding-left:30px}
+.side .out{margin-top:auto;border-top:1px solid #34527F}
+.main{padding:20px 24px}
+.h1{margin:0 0 16px;font-size:32px;line-height:1.2;font-weight:700}
+.h2{margin:0 0 8px;font-size:24px;font-weight:600}
+.h3{margin:0 0 6px;font-size:20px;font-weight:600}
+.row{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:16px}
+.row>*{flex:1 1 200px}
+.card{background:#fff;border:1px solid var(--color-borde);border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.row>.card{margin-bottom:0}
+.card .big{font-size:32px;font-weight:700;line-height:1.2}
+.card small,.sec{color:var(--color-texto-sec);font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 24px;border-radius:8px;font-weight:600;font-size:16px;margin:0 8px 8px 0;border:2px solid var(--color-primario)}
+.btn.pri{background:var(--color-primario);color:#fff}
+.btn.sec{background:#fff;color:var(--color-primario)}
+.btn.dis{background:#E5E7EB;border-color:#E5E7EB;color:#6B7280}
+.btn.sec.dis{background:#fff;border-color:var(--color-borde)}
+.lnk{color:var(--color-primario);font-weight:600;font-size:14px;margin-right:10px}
+.lnk.red{color:var(--err)}
+.fld{margin-bottom:12px}
+.lb{display:block;font-size:14px;font-weight:600;margin-bottom:4px}
+.inp{display:block;border:1px solid #9CA3AF;border-radius:8px;padding:8px 12px;min-height:44px;font-size:16px;color:var(--color-texto-sec);background:#fff}
+.inp.bad{border:2px solid var(--err);color:var(--color-texto)}
+.fe{display:block;color:var(--err);font-size:14px;margin-top:4px}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 16px}
+.tb{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:12px;background:#fff}
+.tb th,.tb td{border:1px solid var(--color-borde);padding:8px 10px;text-align:left;vertical-align:top}
+.tb th{background:var(--color-primario-claro);font-weight:600}
+.tb tr.selr td{background:var(--color-primario-claro)}
+.tb .num{text-align:center}
+.msg{display:flex;gap:10px;padding:10px 14px;border:1px solid;border-radius:8px;margin-bottom:16px;font-size:16px;color:var(--color-texto)}
+.msg b{font-weight:700}
+.msg .ic{font-size:18px;line-height:1.4;font-weight:700}
+.msg.ok{border-color:var(--ok);background:var(--ok-bg)}.msg.ok b,.msg.ok .ic{color:var(--ok)}
+.msg.err{border-color:var(--err);background:var(--err-bg)}.msg.err b,.msg.err .ic{color:var(--err)}
+.msg.warn{border-color:var(--warn);background:var(--warn-bg)}.msg.warn b,.msg.warn .ic{color:var(--warn)}
+.msg.info{border-color:var(--info);background:var(--info-bg)}.msg.info b,.msg.info .ic{color:var(--info)}
+.badge{display:inline-block;border:1px solid var(--color-primario);color:var(--color-primario);border-radius:12px;padding:0 10px;font-size:14px;font-weight:600}
+.badge.done{background:var(--color-primario);color:#fff}
+.tools{display:flex;flex-wrap:wrap;gap:0 16px;align-items:flex-end;margin-bottom:8px}
+.tools .fld{min-width:200px}
+.grid{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed;background:#fff;margin-bottom:16px}
+.grid th,.grid td{border:1px solid var(--color-borde);padding:4px 6px;height:62px;vertical-align:top}
+.grid th{background:var(--color-primario-claro);height:auto;text-align:center;font-weight:600}
+.grid th.fr{width:104px}
+.grid td.cl{background:var(--color-primario-claro)}
+.grid td.cl b{display:block;font-weight:600}
+.grid td.em{color:var(--color-texto-sec);text-align:center;vertical-align:middle}
+.grid td.sel{outline:3px solid var(--color-primario);outline-offset:-3px;background:#fff;font-weight:600;color:var(--color-primario)}
+.grid td.bad{background:var(--err-bg);border:2px solid var(--err);color:var(--err);font-weight:600}
+.grid td.brk{background:#EEF0F3;text-align:center;vertical-align:middle;color:var(--color-texto-sec)}
+.login{display:flex;flex-direction:column;align-items:center;padding:28px 16px;background:var(--color-fondo)}
+.login .box{width:100%;max-width:380px;background:#fff;border:1px solid var(--color-borde);border-radius:8px;padding:20px 24px}
+.login .logo{display:flex;justify-content:center;align-items:center;gap:10px;font-weight:700;font-size:20px;color:var(--color-primario);margin-bottom:12px}
+.login .logo s{width:30px;height:30px;border:2px solid var(--color-primario);border-radius:6px;display:inline-block}
+.login .h1{font-size:32px;text-align:center}
+.avg{display:flex;justify-content:space-between;background:var(--color-primario-claro);border:1px solid var(--color-primario);border-radius:8px;padding:10px 14px;font-weight:700;font-size:20px;margin-bottom:8px}
+.chk{display:inline-block;width:18px;height:18px;border:2px solid var(--color-primario);border-radius:4px;margin-right:6px;vertical-align:-4px;background:#fff}
+.chk.x{background:var(--color-primario)}
+.denied{text-align:center;padding:40px 16px}
+@media print{.item{break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body>
+<header class="doc"><b>T-06 · Wireframes del administrador: catálogos y armado de horario con aviso de empalme</b><p>Jira SWE-39 · HT-01 · Sprint 1 · Basado en T-03 (lista de pantallas) y T-04 (guía de estilo)</p></header>
+<main id="app"></main>
+<script>
+const ONLY='t06';
+/* ---------- piezas reutilizables ---------- */
+const IC={ok:'✓',err:'✕',warn:'⚠',info:'ⓘ'}, TT={ok:'Éxito',err:'Error',warn:'Advertencia',info:'Información'};
+const msg=(k,t)=>`<div class="msg ${k}" role="status"><span class="ic" aria-hidden="true">${IC[k]}</span><div><b>${TT[k]}</b><br>${t}</div></div>`;
+const btn=(t,k='sec',d)=>`<span class="btn ${k}${d?' dis':''}">${t}</span>`;
+const field=(l,v='',e)=>`<div class="fld"><span class="lb">${l}</span><span class="inp${e?' bad':''}">${v}</span>${e?`<span class="fe">${e}</span>`:''}</div>`;
+const sel=(l,v,e)=>field(l,v+' ▾',e);
+const tbl=(h,rows,acts)=>`<table class="tb"><thead><tr>${h.map(x=>`<th>${x}</th>`).join('')}${acts?'<th>Acciones</th>':''}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}${acts?`<td>${acts}</td>`:''}</tr>`).join('')}</tbody></table>`;
+const ACT='<span class="lnk">Editar</span><span class="lnk red">Dar de baja</span>';
+const ROL={su:'Superusuario',ad:'Administrador',dc:'Docente',al:'Alumno'};
+const CAT=['Materias','Aulas','Docentes','Semestres y franjas horarias','Grupos','Alumnos'];
+const MENU={
+  al:[['Inicio'],['Mi horario'],['Mis calificaciones'],['Mi boleta']],
+  dc:[['Inicio'],['Mi horario'],['Capturar calificaciones']],
+  ad:[['Inicio'],['Catálogos',1],...CAT.map(c=>[c,2]),['Horarios']],
+  su:[['Inicio'],['Administradores'],['Catálogos',1],...CAT.map(c=>[c,2]),['Horarios']]
+};
+function shell(role,active,h1,body){
+  return `<div class="in"><div class="app">
+  <div class="hd"><span class="logo"><s></s>Sistema web escolar</span><span class="u">Nombre Apellido · ${ROL[role]}</span></div>
+  <nav class="side" aria-label="Menú del perfil">${MENU[role].map(([t,k])=>`<div class="${k===1?'g':k===2?'s':''}${t===active?' on':''}">${t}</div>`).join('')}<div class="out">Cerrar sesión</div></nav>
+  <section class="main"><div class="h1">${h1}</div>${body}</section></div></div>`;
+}
+const win=(url,inner)=>`<div class="scr"><div class="bar"><i></i><i></i><i></i><span class="url">${url}</span></div>${inner}</div>`;
+const DIAS=['Lunes','Martes','Miércoles','Jueves','Viernes'];
+const FR=['7:00–7:50','7:50–8:40','8:40–9:30','Receso','9:50–10:40','10:40–11:30'];
+const cl=(m,x)=>`<td class="cl"><b>${m}</b>${x}</td>`, EM='<td class="em">—</td>';
+function grid(c,admin){
+  let h=`<table class="grid"><thead><tr><th class="fr">Franja</th>${DIAS.map(d=>`<th>${d}</th>`).join('')}</tr></thead><tbody>`;
+  FR.forEach((f,i)=>{
+    if(f==='Receso'){h+=`<tr><th class="fr">${f}</th><td class="brk" colspan="5">Receso</td></tr>`;return;}
+    h+=`<tr><th class="fr">${f}</th>`;
+    DIAS.forEach((d,j)=>{h+=c[i+'-'+j]||(admin?'<td class="em">+ Asignar</td>':EM);});
+    h+='</tr>';
+  });
+  return h+'</tbody></table>';
+}
+const logo='<div class="logo"><s></s>Sistema web escolar</div>';
+
+/* ---------- pantallas ---------- */
+const S={};
+/* T-05 */
+S.login=()=>`<div class="pair">
+ <div><p class="tag">Estado normal</p>${win('sistema-escolar.mx/login',`<div class="in login"><div class="box">${logo}<div class="h1">Iniciar sesión</div>
+  ${field('Usuario','Escribe tu usuario')}${field('Contraseña','••••••••')}${btn('Entrar','pri')}</div></div>`)}</div>
+ <div><p class="tag">Error: campo vacío o datos incorrectos</p>${win('sistema-escolar.mx/login',`<div class="in login"><div class="box">${logo}<div class="h1">Iniciar sesión</div>
+  ${msg('err','Faltan datos. Escribe tu usuario y tu contraseña e inténtalo de nuevo.')}
+  ${field('Usuario','alumno123')}${field('Contraseña','','Escribe tu contraseña.')}${btn('Entrar','pri')}</div></div>`)}</div></div>`;
+S.denegado=()=>win('sistema-escolar.mx/acceso-denegado',`<div class="in login"><div class="box denied">${logo}<div class="h1">Acceso denegado</div>
+  ${msg('err','No tienes permiso para ver esta pantalla. Vuelve al inicio de tu perfil.')}${btn('Volver al inicio','pri')}</div></div>`);
+S.su01=()=>win('sistema-escolar.mx/inicio',shell('su','Inicio','Panel del superusuario',`
+ <div class="row"><div class="card"><div class="h3">Administradores</div><div class="big">3</div><small>cuentas activas</small></div>
+ <div class="card"><div class="h3">Semestre activo</div><div class="big">2026-B</div><small>Hasta el 18/12/2026</small></div>
+ <div class="card"><div class="h3">Horarios completos</div><div class="big">4 de 6</div><small>grupos</small></div></div>
+ <div class="card"><div class="h3">Accesos rápidos</div>${btn('Nuevo administrador')}${btn('Armar horario')}${btn('Registrar alumno')}</div>`));
+S.ad01=()=>win('sistema-escolar.mx/inicio',shell('ad','Inicio','Panel del administrador',`
+ <div class="row"><div class="card"><div class="h3">Semestre activo</div><div class="big">2026-B</div></div>
+ <div class="card"><div class="h3">Alumnos</div><div class="big">180</div></div><div class="card"><div class="h3">Docentes</div><div class="big">14</div></div></div>
+ <div class="card"><div class="h3">Estado de los horarios</div>${tbl(['Grupo','Turno','Estado'],[['1A','Matutino','<span class="badge done">Completo</span>'],['3A','Matutino','<span class="badge">En preparación</span>'],['5B','Vespertino','<span class="badge">En preparación</span>']])}${btn('Ir a Horarios')}</div>`));
+S.dc01=()=>win('sistema-escolar.mx/inicio',shell('dc','Inicio','Panel del docente',`
+ <div class="row"><div class="card"><div class="h3">Mis materias</div><div class="big">3</div></div><div class="card"><div class="h3">Mis grupos</div><div class="big">4</div></div></div>
+ <div class="card"><div class="h3">Mis clases de hoy</div>${tbl(['Hora','Materia','Grupo','Aula'],[['7:00–7:50','Matemáticas III','3A','Aula 4'],['9:50–10:40','Matemáticas III','5B','Aula 2']])}${btn('Ver mi horario')}${btn('Capturar calificaciones')}</div>`));
+S.al01=()=>win('sistema-escolar.mx/inicio',shell('al','Inicio','Panel del alumno',`
+ <div class="row"><div class="card"><div class="h3">Mi grupo</div><div class="big">3A</div><small>Semestre 3 · Matutino</small></div>
+ <div class="card"><div class="h3">Semestre</div><div class="big">2026-B</div><small>Periodo activo</small></div></div>
+ <div class="card"><div class="h3">Accesos</div>${btn('Mi horario')}${btn('Mis calificaciones')}${btn('Mi boleta')}</div>`));
+S.su02=()=>win('sistema-escolar.mx/administradores',shell('su','Administradores','Administradores',`
+ ${msg('ok','Administrador guardado correctamente. Ya puede iniciar sesión.')}
+ ${tbl(['Nombre','Usuario','Correo'],[['Nombre Apellido','admin.perez','correo@escuela.mx'],['Nombre Apellido','admin.ruiz','correo@escuela.mx']],ACT)}
+ <div class="card"><div class="h3">Nuevo administrador</div>
+ <div class="form">${field('Nombre(s)','')}${field('Apellidos','')}${field('Correo','')}${field('Usuario','admin.perez','El usuario «admin.perez» ya existe. Elige otro usuario.')}${field('Contraseña','')}${field('Confirmar contraseña','')}</div>
+ ${btn('Guardar administrador','pri')}${btn('Cancelar')}</div>`));
+
+/* T-06 */
+S.ad02=()=>win('sistema-escolar.mx/materias',shell('ad','Materias','Materias',`
+ ${tbl(['Clave','Nombre','Horas por semana'],[['MAT-301','Matemáticas III','5'],['FIS-101','Física I','4'],['QUI-101','Química I','4']],ACT)}
+ <div class="card"><div class="h3">Nueva materia</div>${msg('err','La clave MAT-301 ya existe. Escribe una clave distinta.')}
+ <div class="form">${field('Clave','MAT-301')}${field('Nombre','')}${field('Horas por semana','')}</div>${btn('Guardar materia','pri')}${btn('Cancelar')}</div>`));
+S.ad03=()=>win('sistema-escolar.mx/aulas',shell('ad','Aulas','Aulas',`
+ ${tbl(['Nombre','Capacidad'],[['Aula 1','40'],['Aula 2','40'],['Laboratorio de física','25']],ACT)}
+ <div class="card"><div class="h3">Nueva aula</div><div class="form">${field('Nombre','')}${field('Capacidad (alumnos)','')}</div>${btn('Guardar aula','pri')}${btn('Cancelar')}</div>`));
+S.ad04=()=>win('sistema-escolar.mx/docentes',shell('ad','Docentes','Docentes',`
+ ${tbl(['Docente','Materias que imparte'],[['Nombre Apellido','Matemáticas III, Física I'],['Nombre Apellido','Química I']],ACT)}
+ <div class="card"><div class="h3">Registrar docente</div>
+ <div class="form">${field('Nombre(s)','')}${field('Apellidos','')}${field('Correo','')}${field('Usuario de acceso','')}</div>
+ <span class="lb">Materias que imparte</span><p style="margin:0 0 12px"><span class="chk x"></span>Matemáticas III &nbsp; <span class="chk"></span>Física I &nbsp; <span class="chk"></span>Química I</p>
+ <span class="lb">Disponibilidad: marca los bloques en que puede dar clase</span>
+ <table class="tb" style="max-width:520px"><thead><tr><th>Franja</th>${DIAS.map(d=>`<th class="num">${d.slice(0,3)}</th>`).join('')}</tr></thead><tbody>
+ ${['7:00','7:50','8:40','9:50','10:40'].map((h,i)=>`<tr><td>${h}</td>${DIAS.map((d,j)=>`<td class="num"><span class="chk${(i+j)%3?' x':''}" style="margin:0"></span></td>`).join('')}</tr>`).join('')}</tbody></table>
+ <p class="sec" style="margin:0 0 12px">Al guardar se crea su cuenta de acceso.</p>${btn('Guardar docente','pri')}${btn('Cancelar')}</div>`));
+S.ad05=()=>win('sistema-escolar.mx/semestres',shell('ad','Semestres y franjas horarias','Semestres y franjas horarias',`
+ <div class="row"><div class="card" style="flex:2 1 360px"><div class="h3">Semestres</div>${tbl(['Periodo','Inicio','Fin','Estado'],[['2026-B','18/08/2026','18/12/2026','<span class="badge done">Activo</span>'],['2026-A','12/01/2026','12/06/2026','Historial']])}
+ <div class="form">${field('Periodo','')}${field('Fecha de inicio','')}${field('Fecha de fin','')}</div><p style="margin:0 0 12px"><span class="chk"></span>Marcar como semestre activo</p>${btn('Guardar semestre','pri')}</div>
+ <div class="card"><div class="h3">Franjas horarias</div>${tbl(['Franja'],[['7:00–7:50'],['7:50–8:40'],['8:40–9:30']])}${field('Nueva franja','7:00 a 7:50')}${btn('Agregar franja')}</div></div>`));
+S.ad06=()=>win('sistema-escolar.mx/grupos',shell('ad','Grupos','Grupos',`
+ <div class="tools">${sel('Semestre','2026-B (activo)')}</div>
+ ${tbl(['Grupo','Semestre','Turno'],[['1A','1','Matutino'],['3A','3','Matutino'],['5B','5','Vespertino']],ACT)}
+ <div class="card"><div class="h3">Nuevo grupo</div>${msg('err','El grupo 3A ya existe en este semestre. Escribe otro nombre.')}
+ <div class="form">${field('Nombre del grupo','3A')}${sel('Semestre','Elige semestre')}${sel('Turno','Matutino')}</div>${btn('Guardar grupo','pri')}${btn('Cancelar')}</div>`));
+S.ad07=()=>win('sistema-escolar.mx/alumnos',shell('ad','Alumnos','Alumnos',`
+ <div class="tools">${sel('Grupo','3A · Semestre 3 · Matutino')}</div>
+ ${tbl(['Matrícula','Alumno','Grupo'],[['20260001','Nombre Apellido','3A'],['20260002','Nombre Apellido','3A'],['20260003','Nombre Apellido','3A']],ACT)}
+ <div class="card"><div class="h3">Registrar alumno</div>${msg('err','La matrícula ya está registrada. Revisa el número e inténtalo de nuevo.')}
+ <div class="form">${field('Matrícula','20260001')}${field('Nombre(s)','')}${field('Apellidos','')}${field('Correo','')}${sel('Grupo','3A · Semestre 3')}${field('Contraseña inicial','')}</div>
+ ${btn('Guardar alumno','pri')}${btn('Cancelar')}</div>`));
+const base={'0-0':cl('Matemáticas III','Prof. A · Aula 4'),'1-0':cl('Física I','Prof. B · Lab'),'2-0':cl('Química I','Prof. C · Aula 4'),'0-1':cl('Inglés','Prof. D · Aula 2'),'1-1':cl('Matemáticas III','Prof. A · Aula 4'),'0-2':cl('Física I','Prof. B · Lab')};
+const bar=(dis)=>`<div class="tools">${sel('Semestre','2026-B (activo)')}${sel('Grupo','3A')}<div class="fld"><span class="lb">Estado</span><span class="badge">En preparación</span></div></div>`;
+S.ad08=()=>{const c={...base};c['2-2']='<td class="sel em">Mié 8:40–9:30</td>';
+ return win('sistema-escolar.mx/horarios/3A',shell('ad','Horarios','Armar horario por grupo',`${bar()}
+ ${msg('warn','Faltan 3 horas de Matemáticas para completar el horario de este grupo.')}${grid(c,1)}
+ <div class="card"><div class="h3">Asignar clase · Miércoles 8:40–9:30</div><div class="form">${sel('Materia','Elige materia')}${sel('Docente','Solo docentes disponibles')}${sel('Aula','Elige aula')}</div>
+ ${btn('Guardar clase','pri')}${btn('Cancelar')}${btn('Marcar horario como completo','sec',1)}<p class="sec" style="margin:0">Haz clic en una clase para modificarla o quitarla.</p></div>`));};
+S.ad08e=()=>{const c={...base};c['2-2']='<td class="bad">Empalme: no se guardó</td>';
+ return win('sistema-escolar.mx/horarios/3A',shell('ad','Horarios','Armar horario por grupo',`${bar()}${grid(c,1)}
+ <div class="card"><div class="h3">Asignar clase · Miércoles 8:40–9:30</div>
+ ${msg('err','Empalme de docente: la Prof. A ya tiene clase con el grupo 5B el miércoles de 8:40 a 9:30. Elige otra franja u otro docente.')}
+ <div class="form">${field('Materia','Matemáticas III')}${field('Docente','Prof. A')}${field('Aula','Aula 4')}</div>
+ ${btn('Guardar clase','pri',1)}${btn('Cancelar')}${btn('Marcar horario como completo','sec',1)}</div>`));};
+
+/* T-07 */
+const mh={'0-0':cl('Matemáticas III','Grupo 3A · Aula 4'),'2-0':cl('Matemáticas III','Grupo 5B · Aula 2'),'1-2':cl('Matemáticas III','Grupo 3A · Aula 4'),'4-3':cl('Matemáticas III','Grupo 5B · Aula 2')};
+S.dc02=()=>win('sistema-escolar.mx/mi-horario',shell('dc','Mi horario','Mi horario',`
+ <div class="tools">${sel('Semestre','2026-B (activo)')}</div>${grid(mh)}
+ <p class="sec" style="margin:0">Solo lectura. Solo ves tus clases: día, hora, grupo, materia y aula.</p>`));
+S.dc03=()=>win('sistema-escolar.mx/calificaciones',shell('dc','Capturar calificaciones','Capturar calificaciones',`
+ <div class="tools">${sel('Grupo','3A')}${sel('Materia','Matemáticas III')}</div><p class="sec" style="margin:0 0 12px">Solo aparecen tus grupos y materias.</p>
+ ${msg('err','La calificación debe ser un número entre 0 y 10. Corrígela e inténtalo de nuevo.')}
+ <table class="tb"><thead><tr><th class="num" style="width:50px">#</th><th>Matrícula</th><th>Alumno</th><th style="width:230px">Calificación</th></tr></thead><tbody>
+ <tr><td class="num">1</td><td>20260001</td><td>Nombre Apellido</td><td><span class="inp">9.0</span></td></tr>
+ <tr><td class="num">2</td><td>20260002</td><td>Nombre Apellido</td><td><span class="inp">7.5</span></td></tr>
+ <tr><td class="num">3</td><td>20260003</td><td>Nombre Apellido</td><td><span class="inp bad">11</span><span class="fe">Escribe un número entre 0 y 10.</span></td></tr>
+ <tr><td class="num">4</td><td>20260004</td><td>Nombre Apellido</td><td><span class="inp"></span></td></tr></tbody></table>
+ ${btn('Guardar calificaciones','pri')}${btn('Cancelar')}`));
+S.al02=()=>`<div class="stack">
+ <div><p class="tag">Horario completo</p>${win('sistema-escolar.mx/mi-horario',shell('al','Mi horario','Mi horario · Grupo 3A',`${grid({'0-0':cl('Matemáticas III','Prof. A · Aula 4'),'1-0':cl('Física I','Prof. B · Lab'),'0-1':cl('Inglés','Prof. D · Aula 2'),'2-2':cl('Química I','Prof. C · Aula 4')})}<p class="sec" style="margin:0">Solo lectura. Cada clase muestra materia, hora, docente y aula.</p>`))}</div>
+ <div><p class="tag">Horario aún no marcado como completo</p>${win('sistema-escolar.mx/mi-horario',shell('al','Mi horario','Mi horario · Grupo 3A',msg('info','Horario en preparación. Podrás consultarlo cuando esté completo.')))}</div></div>`;
+S.al03=()=>win('sistema-escolar.mx/mis-calificaciones',shell('al','Mis calificaciones','Mis calificaciones',`
+ <div class="tools">${sel('Semestre','2026-B (activo)')}</div>
+ ${tbl(['Materia','Docente','Calificación'],[['Matemáticas III','Prof. A','9.0'],['Física I','Prof. B','8.5'],['Química I','Prof. C','<span class="sec">Sin capturar</span>'],['Inglés','Prof. D','<span class="sec">Sin capturar</span>']])}`));
+S.al04=()=>win('sistema-escolar.mx/mi-boleta',shell('al','Mi boleta','Mi boleta',`
+ <div class="tools">${sel('Semestre','2026-B (activo)')}</div>
+ <div class="card"><div class="row" style="margin:0"><div><small>Alumno</small><br>Nombre Apellido</div><div><small>Matrícula</small><br>20260001</div><div><small>Grupo</small><br>3A · Semestre 3</div><div><small>Periodo</small><br>2026-B</div></div></div>
+ ${tbl(['Materia','Docente','Calificación'],[['Matemáticas III','Prof. A','9.0'],['Física I','Prof. B','8.5'],['Química I','Prof. C','8.6'],['Inglés','Prof. D','8.7']])}
+ <div class="avg"><span>Promedio del semestre</span><span>8.7</span></div>
+ <p class="sec" style="margin:0">Si eliges un semestre anterior, se muestra la boleta de ese periodo.</p>`));
+
+/* ---------- estructura ---------- */
+const TASKS={
+ t05:[
+  ['GEN-01 · Inicio de sesión','HU-01','login','Estado normal y de error. Si los datos son incorrectos o hay un campo vacío, muestra el mensaje y el usuario se queda aquí. Con datos correctos pasa a su panel (SU-01, AD-01, DC-01 o AL-01).','Mensaje cuando los datos no coinciden: «Usuario o contraseña incorrectos. Revisa tus datos e inténtalo de nuevo.»'],
+  ['GEN-02 · Acceso denegado','HU-01','denegado','Aviso cuando alguien abre una pantalla que no es de su perfil, o entra sin haber iniciado sesión.',''],
+  ['SU-01 · Panel del superusuario','HU-01 · HU-18','su01','Menú: Inicio, Administradores, todo lo del administrador y Cerrar sesión. La opción actual aparece resaltada.',''],
+  ['SU-02 · Administradores','HU-02','su02','Alta de administradores, con mensaje de éxito y de error si el usuario ya existe. El administrador no ve esta opción en su menú.','Se incluye aquí porque pertenece al perfil superusuario.'],
+  ['AD-01 · Panel del administrador','HU-01 · HU-18','ad01','El menú agrupa los catálogos (Materias, Aulas, Docentes, Semestres y franjas horarias, Grupos, Alumnos) y Horarios. No incluye Administradores.',''],
+  ['DC-01 · Panel del docente','HU-01 · HU-18','dc01','Menú: Inicio, Mi horario, Capturar calificaciones y Cerrar sesión.',''],
+  ['AL-01 · Panel del alumno','HU-01 · HU-18','al01','Menú: Inicio, Mi horario, Mis calificaciones, Mi boleta y Cerrar sesión.','']],
+ t06:[
+  ['AD-02 · Materias','HU-03','ad02','Listado, alta, edición y baja (clave, nombre y horas por semana). La clave repetida se bloquea con un mensaje.','Dar de baja va en rojo y pide confirmación.'],
+  ['AD-03 · Aulas','HU-04','ad03','Listado, alta, edición y baja (nombre y capacidad).',''],
+  ['AD-04 · Docentes','HU-05','ad04','Listado y registro con sus materias y su disponibilidad. Solo se podrá asignar al docente en los bloques marcados.',''],
+  ['AD-05 · Semestres y franjas horarias','HU-07','ad05','Un solo semestre activo; los terminados quedan como historial. Las franjas son las únicas que se pueden elegir al armar el horario.',''],
+  ['AD-06 · Grupos','HU-06','ad06','Listado y alta por semestre (nombre, semestre y turno). No permite grupos repetidos en el mismo semestre.',''],
+  ['AD-07 · Alumnos','HU-08','ad07','Alta con grupo y lista del grupo. Matrícula obligatoria y única.',''],
+  ['AD-08 · Armado de horario por grupo','HU-09 · HU-11','ad08','Cuadrícula por día y franja. Al elegir un hueco se asigna materia, docente y aula. «Marcar horario como completo» publica el horario.',''],
+  ['AD-08 · Aviso de empalme','HU-10','ad08e','El sistema bloquea el guardado y dice la causa. «Guardar clase» y «Marcar como completo» quedan deshabilitados mientras haya empalme.','Mismo formato para las otras dos causas. Aula: «Empalme de aula: el Aula 4 está ocupada por Química I el miércoles de 8:40 a 9:30. Elige otra franja u otra aula.» Grupo: «Empalme de grupo: el grupo 3A ya tiene Física I el miércoles de 8:40 a 9:30. Elige otra franja.»']],
+ t07:[
+  ['DC-02 · Mi horario (docente)','HU-13','dc02','Sus materias, horarios y aulas asignadas. Solo ve los suyos y solo de grupos con horario completo.',''],
+  ['DC-03 · Capturar calificaciones','HU-14','dc03','Elige grupo y materia (solo los suyos) y captura la calificación de cada alumno. Valida el rango de 0 a 10 y rechaza letras.','Mensaje de éxito al guardar: «Calificaciones guardadas correctamente.»'],
+  ['AL-02 · Mi horario (alumno)','HU-12','al02','Horario de su grupo en solo lectura. Si no está completo muestra «Horario en preparación».',''],
+  ['AL-03 · Mis calificaciones','HU-15','al03','Calificación de cada materia del semestre. Si aún no hay, aparece «Sin capturar».',''],
+  ['AL-04 · Mi boleta','HU-16','al04','Datos del alumno, materias con su calificación y promedio. Permite elegir un semestre anterior.','']]
+};
+document.getElementById('app').innerHTML='<p class="lead">Pantallas AD-02 a AD-08, con el aviso de empalme y su causa. Todos los catálogos siguen el mismo patrón: tabla, formulario, Editar y Dar de baja.</p>'+TASKS[ONLY].map(([n,hu,key,nota,extra])=>`
+ <article class="item"><h3>${n}</h3><p class="cap">Cubre: <code>${hu}</code></p>${S[key]()}
+ <div class="notes">${nota}${extra?`<ul><li>${extra}</li></ul>`:''}</div></article>`).join('');
+</script>
+</body>
+</html>
